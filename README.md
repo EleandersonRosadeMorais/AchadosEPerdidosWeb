@@ -9,17 +9,17 @@
   Neste dia, atuei como Scrum Master e implementei o método Kanban utilizando o **trello.com**. Criei sete cards contendo os principais requisitos de trabalho. Abaixo, a organização inicial:
 
   **A Fazer**<br>
-  [FD] Criar tela de cadastro  
-
+  [FD] Criar tela de cadastro - Igor Dias
+  [FD] Criar tela de login - Igor Dias
+  [BD] Criar funções *GET* do formulário - Arthur Rodriguês
+  [BD] Criar banco de dados - Eleanderson Morais
+  
   **Em andamento**  
-  [FD] Criar tela de login  
-  [BD] Criar funções *GET* do formulário  
-  [BD] Criar funções *GET* do formulário  
-  [BD] Criar classe do Pedido  
+  [BD] Criar classe do Pedido - Arthur Rodriguês
 
   **Concluído**  
-  [FD][PO] Definição da paleta de cores  
-  [SM] Criação do repositório no GitHub  
+  [FD][PO] Definição da paleta de cores - Andrei Medeiros
+  [SM] Criação do repositório no GitHub - Eleanderson Morais
 
   Após organizar o Kanban, criei o repositório no GitHub para manter o projeto organizado e estabeleci uma regra de branch, permitindo que apenas eu possa aprovar *merges* realizados pelos desenvolvedores Arthur e Igor.
 
