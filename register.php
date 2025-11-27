@@ -101,6 +101,11 @@
 
         <br><br>
 
+        <label for="cpf">Cpf:</label>
+        <input type="text" name="cpf" required>
+
+        <br><br>
+
         <input type="submit" value="Registrar">
     </form>
     </div>
