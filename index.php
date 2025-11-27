@@ -1,3 +1,11 @@
+<?php 
+require __DIR__.'../achadoseperdidosweb/api_composer/vendor/autoload.php';
+use Kreait\Firebase\Factory;
+
+$factory = (new Factory())->withDatabaseUri('');
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
