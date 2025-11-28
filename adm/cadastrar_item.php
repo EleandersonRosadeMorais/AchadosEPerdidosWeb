@@ -51,7 +51,7 @@
 
             <button type="submit">Cadastrar Item</button>
 
-            <a id="retornar" href=".php">Retornar</a>
+            <a href="gerenciar_itens.php" class="btn-voltar2">Retornar</a>
 
         </form>
 

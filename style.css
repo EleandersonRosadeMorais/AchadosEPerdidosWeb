@@ -1,6 +1,5 @@
         body {
             font-family: Arial, sans-serif;
-            height: 100vh;
             margin: 0;
             padding: 0;
             background-color: #f8f8ec;
@@ -62,9 +61,14 @@
             cursor: pointer;
             font-size: 16px;
             width: 50%;
+            display: flex;
+            justify-content: center;
+            text-decoration: none;  
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
         }
 
-        .divButton{
+        .divButton {
             display: flex;
             width: 40%;
             height: 50vh;
@@ -75,15 +79,15 @@
             flex-direction: column;
             background-color: #ffffff;
             border-radius: 30px;
-
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        
+
         h2 {
             color: #333;
         }
 
-         h1 {
+        h1 {
             color: #333;
             display: flex;
             justify-content: center;
@@ -120,7 +124,7 @@
             margin-bottom: 20px;
         }
 
-         #mySelect{
+        #mySelect {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -181,22 +185,24 @@
             align-items: center;
             background-color: #ffffff;
             border-radius: 30px;
-            margin: 40px auto;
+            margin: 25px auto;
             padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        #titulo{
+        #titulo {
             color: #ffffff;
         }
 
-        #retornar{
+        #retornar {
             display: flex;
             margin-top: 20px;
-            
+
         }
 
-        .box{
-            width: 40%;
+        /*Login*/
+        .box {
+            width: 30%;
             height: 50vh;
             background-color: #ffffff;
             display: flex;
@@ -204,38 +210,291 @@
             align-items: center;
             padding: 30px;
             margin: 100px auto;
-           
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 30px;
+
+        }
+
+        /* Register */
+         .box2 {
+            width: 30%;
+            height: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            margin: 100px auto;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border-radius: 30px;
 
         }
 
         input[type="email"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
-        text-align: center;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-    }
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
 
-     input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
-        text-align: center;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-    }
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
 
-    input[type="submit"]:hover {
+        input[type="submit"]:hover {
             background-color: #013354ff;
         }
 
-     
+        
+        .btn-voltar2 {
+            display: flex;
+            background: #02416D;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.2s;
+            width: 15%;
+            margin-top: 20px;
+            justify-content: center;
+        }
 
 
-    
+
+
+
+
+        .card-item {
+            display: flex;
+            gap: 30px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            height: 450px;
+
+        }
+
+        .item-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .item-img {
+            width: 400px;
+            height: 450px;
+            border: 3px solid #000;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-voltar {
+            padding: 10px 18px;
+            background: #02416D;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.2s;
+            width: 40%;
+            text-align: center;
+        }
+
+        .btn-voltar:hover {
+            background: #023052;
+        }
+
+        .data-encontrado {
+            font-style: italic;
+        }
+
+        .titulo-pagina {
+            font-size: 28px;
+            margin-bottom: 25px;
+            margin-top: -10px;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            width: 65%;
+            text-align: left;
+        }
+
+        .itemNome {
+            display: flex;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            padding-bottom: 15px;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            margin: 8px 0;
+            color: #000000;
+            font-size: 19px;
+            margin-top: 50px;
+        }
+
+         /* Novo */
+        .saudacao {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 80px;
+}
+
+.saudacao h1 {
+    margin-bottom: 15px;
+}
+
+.saudacao p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.sobre{
+    display: flex;
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+
+/* Novo */
+ .card-item2 {
+            display: flex;
+            margin: auto;
+            width: 800px;
+            gap: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+
+        }
+
+        .item-img2 {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .info-footer2 {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-info2 {
+            display: flex;
+            flex-direction: column;
+            width: 70%;
+            text-align: left;
+        }
+
+        .btn-visualizar {
+            padding: 10px 18px;
+            background: #02416D;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.2s;
+            width: 40%;
+            text-align: center;
+        }
+
+        .rotItens{
+            text-align: center;
+            margin: 0 0 10px 0;
+            margin-bottom: 30px;
+            margin-top: 200px;
+        }
+
+         .btn-visualizar:hover {
+            background: #023052;
+        }
+
+
+
+        /* procurar.php */
+        /* novo */
+
+        .container2 {
+            background: #fff;
+            padding: 20px;
+            width: 400px;
+            margin: 100px auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        #pesquisar {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #02416D;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #023052;
+        }

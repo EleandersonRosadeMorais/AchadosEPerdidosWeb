@@ -22,10 +22,11 @@
     <br><br>
 
     <label> <strong>Cadastrar Item</strong></label>
-    <button class="btn">Selecionar</button>
+    <a href="cadastrar_item.php" class="btn">Selecionar</a>
 
     <label><strong>Cadastrar Administrador</strong></label>
-    <button class="btn">Selecionar</button>
+    <a href="/achadosEperdidosWeb/register.php" class="btn">Selecionar</a>
+
 
     </div>
 
