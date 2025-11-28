@@ -35,4 +35,33 @@
 
 ### Dia 2 (26/11/2025)
 
+- **[SM] Eleanderson Rosa de Morais**
+
+  Nesse dia organizei melhor o trelo, e dediquei meu tempo a ajudar o Arthur e o Igor, pois estavam meio difundidos no que fazer, além disso criei 8 cards novos, com intuito de realizamos na mesma sprint, a estrutura dos códigos criados ficou assim:
+  
+  **KanBan*
+  [SM] Criar plano diário de branch
+  [FD] Criar tela de cadastro do item perdido
+  [BD][SM] Criar banco de dados FireBase
+  [BD] Criar arquivo .php da conexão com banco de dados
+  [FD] Criar Menu único do item perdido com mais informações
+  [FD] Criar CSS da tela de login
+  [FD] Criar Menu com todos itens perdidos
+  [FD] Criar CSS da tela de cadastro do item perdido
+
+- **[Dev] Igor Dias**
+
+  Em si o Igor deu conitnuidade em seus cards, realizando algumas modificações, até mesmo o formulário, onde eu, ele e o Ian Franco Dev do projeto achados e perdidos mobile, onde conversamos sobre os campos que irão conter o formulário, fizemos uma reunião, assim dizer, ele completou as seguintes questões:
+- Criou a tela de cadastro
+- Criou a tela de login
+
+- **[Dev] Arthur Rodrigues**
+
+  Arthur foi mais produtivo do que ontem, ele começou a codar, fez muito progresso, ele recebeu muito bem algumas dicas minhas referente ao banco de dados e como funciona o código do firebase e sua implementação, ele conseguiu finalizar apenas um código, mas um dos mais importantes:
+- criou o arquivo PHP sobre a conexão com o banco de dados. 
+
+---
+
+### Dia 3 (27/11/2025)
+
 *(aguardando conteúdo)*
