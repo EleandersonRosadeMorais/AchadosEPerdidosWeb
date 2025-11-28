@@ -64,4 +64,38 @@
 
 ### Dia 3 (27/11/2025)
 
+- **[SM] Eleanderson Rosa de Morais**
+
+  Eu gosto de chamar esse dia de o dia da mudanca, onde mudou uma boa parte do projeto, onde os DEVs ficaram loucos, o dia da mudanca do banco de dados, optamos por mudar do FireBase para o MYSQL afim de usar o banco de dados responsivo com ralacao e tals, em um servidor, ficara mais facil de organizar os codigos por ser SQL e mais facil de enviar e remover dados, pois no FireBase os nomes das tableas podiam ser qualquer coisa, mas enfim, foi uma decisao crucial, mas importante, alem do mais eu criei mais 14 cards, segue a estrutura:
+  
+  **KanBan*
+[SM] Criar repositório no Github
+[FD][PO] Paleta de cor
+[SM] Criar Diagrama DER
+[BD] Migrar os códigos referentes ao banco de dados Firebase para o MYSQL
+[SM] Criar banco de dados MYSQL
+[BD] Criar Classe do item perdido
+[BD] Criar classe .php do administrador
+[BD] Criar arquivo .php do .config
+[BD] Criar arquivo .php das funções do Administrador
+[BD] Criar arquivo .php das funções do item perdido
+[BD] Organizar o repositório, criar pastas e nomes coerentes
+[QA] Testar tela de login
+[QA] Testar tela de cadastrar item perdido
+[QA] Testar tela do menu único
+[QA] Testar tela com todos itens perdidos
+
+
+- **[Dev] Igor Dias**
+
+  Nesse dia Igor ficou apenas completando o andamento da Sprint, criando CSS das telas e criar a tela do Item unico.
+
+- **[Dev] Arthur Rodrigues**
+
+  Arthur foi o que mais sofreu no precosso, pois ele ficou a aula inteira resolvendo a alteracao de banco de dados. 
+
+---
+
+### Dia 4 (28/11/2025)
+
 *(aguardando conteúdo)*
