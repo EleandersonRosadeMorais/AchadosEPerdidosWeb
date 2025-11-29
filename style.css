@@ -2,7 +2,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f8ec;
+            background-color: #f8f8f8;
         }
 
         header {
@@ -51,6 +51,7 @@
             color: #ffffff;
         }
 
+        /* novo */
         .btn {
             background-color: #02416D;
             color: white;
@@ -190,6 +191,20 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
+        /* Novo */
+        .btn-voltar2 {
+            display: flex;
+            background: #02416D;
+            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.2s;
+            width: 15%;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
         #titulo {
             color: #ffffff;
         }
@@ -200,9 +215,9 @@
 
         }
 
-        /*Login*/
+        /* Login */
         .box {
-            width: 30%;
+            width: 25%;
             height: 50vh;
             background-color: #ffffff;
             display: flex;
@@ -256,21 +271,15 @@
             background-color: #013354ff;
         }
 
-        
-        .btn-voltar2 {
-            display: flex;
-            background: #02416D;
-            padding: 10px 20px;
-            color: #fff;
-            text-decoration: none;
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 6px;
-            transition: 0.2s;
-            width: 15%;
-            margin-top: 20px;
-            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 16px;
         }
-
-
 
 
 
@@ -367,7 +376,10 @@
             margin-top: 50px;
         }
 
-         /* Novo */
+
+
+
+        /* Novo */
         .saudacao {
     max-width: 1000px;
     margin: 0 auto;

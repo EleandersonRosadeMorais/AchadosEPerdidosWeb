@@ -17,15 +17,12 @@
 
     <div class="divButton">
 
-    <h2>Seja bem-vindo à área de Gerencimento</h2>
+    <h2>Seja bem-vindo a área de Gerencimento</h2>
 
     <br><br>
+    <a href="cadastrar_item.php" class="btn">Cadastrar Item</a>
 
-    <label> <strong>Cadastrar Item</strong></label>
-    <a href="cadastrar_item.php" class="btn">Selecionar</a>
-
-    <label><strong>Cadastrar Administrador</strong></label>
-    <a href="/achadosEperdidosWeb/register.php" class="btn">Selecionar</a>
+    <a href="/achadosEperdidosWeb/register.php" class="btn">Cadastrar Administrador</a>
 
 
     </div>

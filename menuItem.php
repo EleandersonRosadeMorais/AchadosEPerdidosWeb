@@ -25,12 +25,12 @@
 
         
         <div class="item-info">
-            <h2 class="itemNome">Nome do Item</h2>
+            <h3 class="itemNome">Chaleira</h3>
 
             <div class="info">
-            <h4><strong>Local onde foi encontrado:</strong> Cafeteria</h4>
-            <h4><strong>Tipo do Item:</strong> Documento</h4>
-            <h4><strong>Local de busca:</strong> Secretaria</h4>
+            <h3><strong>Local onde foi encontrado:</strong> Cafeteria</h3>
+            <h3><strong>Tipo do Item:</strong> Documento</h3>
+            <h3><strong>Local de busca:</strong> Secretaria</h3>
             </div>
 
             <div class="info-footer">
