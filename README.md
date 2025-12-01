@@ -98,4 +98,56 @@
 
 ### Dia 4 (28/11/2025)
 
+- **[SM] Eleanderson Rosa de Morais**
+
+  Nesse dia em questão eu fiquei auxiliando a dupla a criação de branch, commit e coisas relacionadas ao git, além do mais ajudei o Arthur em questão do banco de dados mysql, sobre finalizar o CRUD. 
+
+- **[Dev] Igor Dias**
+
+  Igor ficou finalizando algumas telas, principal a tela principal e a tela de cadastrar e logar, em si ficou arrumando o CSS.
+
+- **[Dev] Arthur Rodrigues**
+
+  Como eu havia comentado antes, o Arthur ficou atualizando os códigos do banco de dados do FireBase para o MYSQL.
+
+---
+
+### Dia Extra ([29/30]/11/2025)
+
+- **[SM] Eleanderson Rosa de Morais**
+
+  No final de semana, tomei a frente do projeto ao perceber que minha equipe estava avançando em um ritmo mais lento em comparação às demais. Caso continuássemos daquela forma, não conseguiríamos entregar o projeto até o final da Sprint 2. Por isso, dediquei meu tempo no fim de semana para desenvolver grande parte do CRUD.
+
+  Não alterei significativamente o HTML e o CSS; apenas utilizei o que o Igor e o Arthur já haviam produzido e fiz alguns ajustes necessários. Encontrei alguns conflitos no código, como o session_start sendo iniciado tanto no header quanto em todas as páginas HTML, o que gerava problemas. Além disso, alguns arquivos estavam sendo referenciados com nomes incorretos, assim como alguns campos enviados ou recebidos do MySQL. Também identifiquei trechos que estavam incompletos e impediam o funcionamento adequado das funcionalidades, e esses eu corrigi.
+
+  Não implementei nada relacionado à edição de item perdido nem à página de busca. Vou deixar essas partes para eles desenvolverem durante a Sprint 2, e espero que consigam avançar bem.
+
+  Além disso, criei onze novos cards para a Sprint 2, sendo eles:
+
+  **KanBan*
+  
+[QA] Teste rapido e funcional sobre tudo feito ate agora, antes de subir para o servidor
+[BD] Subir para o servidor
+[BD] Criar compatibilidade com o .apk mobile
+[BD] Criar banco de dados no servidor
+[FD] Dividir o style.css em varias partes na pasta CSS
+[FD] Arrumar CSS de todas as paginas que precisam
+[FD] Criar tela de procurar
+[BD] Criar codigos para procurar
+[FD] Criar tela de editar item perdido
+[BD] Criar funções para editar o item
+[FD] Criar CSS da tela de editar item
+  
+- **[Dev] Igor Dias**
+
+  Não abriu o repositório!
+
+- **[Dev] Arthur Rodrigues**
+
+  Não abriu o repositório!
+
+---
+
+### Dia 5 (01/12/2025)
+
 *(aguardando conteúdo)*
