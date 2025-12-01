@@ -1,5 +1,5 @@
 <?php
-require_once "ConexaoDb.php";
+require_once "conexao_db.php";
 
 class ItemPerdido
 {
@@ -10,8 +10,6 @@ class ItemPerdido
     {
         $this->conn = $db;
     }
-
-    // Criar item perdido
     public function criar($nome, $dataEncontrado, $localizacaoEncontrada, $localizacaoBuscar, $tipo, $imagem, $administrador_fk, $status = 'disponivel')
     {
         $query = "INSERT INTO " . $this->table_name . " 
@@ -28,7 +26,6 @@ class ItemPerdido
         }
     }
 
-    // Listar todos os itens
     public function listar()
     {
         $query = "SELECT i.*, a.nome as administrador_nome 
@@ -53,7 +50,6 @@ class ItemPerdido
         }
     }
 
-    // Buscar item por ID
     public function buscarPorId($id)
     {
         $query = "SELECT i.*, a.nome as administrador_nome 
@@ -73,7 +69,6 @@ class ItemPerdido
         }
     }
 
-    // Atualizar item
     public function atualizar($id, $nome, $dataEncontrado, $localizacaoEncontrada, $localizacaoBuscar, $tipo, $imagem = null, $status)
     {
         if ($imagem) {
@@ -91,7 +86,6 @@ class ItemPerdido
         }
     }
 
-    // Excluir item
     public function excluir($id)
     {
         $query = "DELETE FROM " . $this->table_name . " WHERE id_pk = ?";
@@ -106,7 +100,6 @@ class ItemPerdido
         }
     }
 
-    // Buscar itens por status
     public function buscarPorStatus($status)
     {
         $query = "SELECT i.*, a.nome as administrador_nome 
@@ -132,7 +125,6 @@ class ItemPerdido
         }
     }
 
-    // Buscar itens por tipo
     public function buscarPorTipo($tipo)
     {
         $query = "SELECT i.*, a.nome as administrador_nome 
@@ -158,7 +150,6 @@ class ItemPerdido
         }
     }
 
-    // Atualizar apenas o status do item
     public function atualizarStatus($id, $status)
     {
         $query = "UPDATE " . $this->table_name . " SET status = ? WHERE id_pk = ?";
