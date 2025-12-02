@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <input type="submit" value="Registrar">
 
-            <a href="login.php" class="btn-voltar2">Fazer Login</a>
+            <a href="/achadosEperdidosWeb/adm/gerenciar_itens.php" class="btn-voltar2">Retornar</a>
         </form>
     </div>
 </body>

@@ -51,7 +51,7 @@
             color: #ffffff;
         }
 
-        /* novo */
+   
         .btn {
             background-color: #02416D;
             color: white;
@@ -104,6 +104,17 @@
 
 
         input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        #tipo {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -191,7 +202,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        /* Novo */
+        
         .btn-voltar2 {
             display: flex;
             background: #02416D;
@@ -267,6 +278,7 @@
             margin-bottom: 20px;
         }
 
+      
         input[type="submit"]:hover {
             background-color: #013354ff;
         }
@@ -379,7 +391,7 @@
 
 
 
-        /* Novo */
+  
         .saudacao {
             max-width: 1000px;
             margin: 0 auto;
@@ -408,7 +420,7 @@
 
 
 
-        /* Novo */
+    
         .card-item2 {
             display: flex;
             margin: auto;
@@ -470,7 +482,7 @@
 
 
         /* procurar.php */
-        /* novo */
+        
 
         .container2 {
             background: #fff;
@@ -692,4 +704,25 @@
             color: #666;
             text-align: center;
             font-style: italic;
+        }
+
+
+        .divGerenciamento {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            flex-direction: column;
+        }
+
+        .filtro{
+            display: flex;
+            justify-content: center;
+            
+        }
+
+        .filtro2{
+            width: 120px;0
+            margin-left: 10px;
         }

@@ -7,7 +7,16 @@ $database = new Database();
 $db = $database->getConnection();
 $itemPerdido = new ItemPerdido($db);
 
-$itens = $itemPerdido->buscarPorStatus('disponivel');
+$tipo = $_GET['tipo'] ?? '';
+
+if (!empty($tipo)) {
+    
+    $itens = $itemPerdido->buscarPorTipo($tipo);
+} else {
+    
+    $itens = $itemPerdido->buscarPorStatus('disponivel');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +42,20 @@ $itens = $itemPerdido->buscarPorStatus('disponivel');
     </div>
 
     <h1 class="rotItens">Itens Encontrados (<?php echo count($itens); ?>)</h1>
+    <h2 class="filtro">
+    Filtrar por 
+    <form method="GET">
+        <select class="filtro2" name="tipo" onchange="this.form.submit()">
+            <option value="">Todos</option>
+            <option value="Eletrônico" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Eletrônico') ? 'selected' : '' ?>>Eletrônico</option>
+            <option value="Vestuário" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Vestuário') ? 'selected' : '' ?>>Vestuário</option>
+            <option value="Ferramenta" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Ferramenta') ? 'selected' : '' ?>>Ferramenta</option>
+            <option value="Documentação" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Documentação') ? 'selected' : '' ?>>Documentação</option>
+            <option value="Material Escolar" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Material Escolar') ? 'selected' : '' ?>>Material Escolar</option>
+        </select>
+    </form>
+</h2>
+
 
     <?php if (count($itens) > 0): ?>
         <?php foreach ($itens as $item): ?>

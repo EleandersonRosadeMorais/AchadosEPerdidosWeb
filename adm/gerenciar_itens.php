@@ -27,8 +27,9 @@ $itens = $itemPerdido->listar();
     <?php include('../templates/cabecalho.php'); ?>
 
     <div class="container">
-        <h2>Área de Gerenciamento</h2>
 
+        <div class="divGerenciamento">
+        <h2>Área de Gerenciamento</h2>
         <?php if (isset($_GET['sucesso'])): ?>
             <div class="sucesso"><?php echo $_GET['sucesso']; ?></div>
         <?php endif; ?>
@@ -41,6 +42,8 @@ $itens = $itemPerdido->listar();
             <a href="cadastrar_item.php" class="btn">Cadastrar Novo Item</a>
             <a href="../register.php" class="btn">Cadastrar Administrador</a>
             <a href="../index.php" class="btn">Ver Site Público</a>
+        </div>
+        
         </div>
 
         <h3>Itens Cadastrados (<?php echo count($itens); ?>)</h3>
