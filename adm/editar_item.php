@@ -27,9 +27,12 @@ if (!$item) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar item</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 
 <body>
+
+<div class="boxEditar">
        <form action="salvar_edicao.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
         <label for="novo_nome">Novo nome do item:</label>
         <input type="text" id="novo_nome" name="novo_nome" required
@@ -68,6 +71,7 @@ if (!$item) {
 
         <button type="submit">Salvar alterações</button>
     </form>
+    </div>
 
 
 </body>

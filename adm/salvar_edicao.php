@@ -3,6 +3,7 @@ session_start();
 require_once('../db/conexao_db.php');
 require_once('../db/tab_item.php');
 
+$erro = [];
 
 if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
     header('Location: ../login.php');
@@ -27,6 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $novo_local_busca = $_POST['novo_local_busca'];
         $tipo_editar = $_POST['tipo_editar'];
         $status_editar = $_POST['status_editar'];
+
+        if(empty($novo_nome) || empty($nova_data) || empty($novo_local_encontrado) || empty($novo_local_busca) || empty($tipo_editar) || empty($status_editar)) {
+          $erro[] = "todos os campos precisam ser preenchidos";
+        }//esse daqui é só para testes mesmo
 
         $imagem = null;
         if (isset($_FILES['imagem_editar']) && $_FILES['imagem_editar']['error'] == 0) {
@@ -55,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $novo_local_encontrado,
                 $novo_local_busca,
                 $tipo_editar,
-                $imagem_editar,
+                $caminho_completo,
                 $status_editar
             )
         ) {
@@ -70,4 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
     header('Location: cadastrar_item.php');
 }
+
+
 ?>
