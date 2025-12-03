@@ -706,23 +706,15 @@
             font-style: italic;
         }
 
-
-        .divGerenciamento {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            flex-direction: column;
-        }
-
-        .filtro{
-            display: flex;
-            justify-content: center;
-            
-        }
-
-        .filtro2{
-            width: 120px;0
-            margin-left: 10px;
+        .boxEditar {
+        display: flex;
+        width: 40%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        background-color: #ffffff;
+        border-radius: 30px;
+        margin: 25px auto;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
