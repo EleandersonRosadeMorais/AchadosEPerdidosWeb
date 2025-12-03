@@ -24,16 +24,16 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
             <?php endif; ?>
 
             <label>Nome do item</label>
-            <input type="text" name="nome" required>
+            <input type="text" name="nome" required value=<?php echo htmlspecialchars('nome')?>>
 
             <label>Data em que foi encontrado</label>
-            <input type="date" name="data" required>
+            <input type="date" name="data" required value="<?php echo htmlspecialchars('dataEncontrado')?>">
 
             <label>Local onde foi encontrado</label>
-            <input type="text" name="localEncontrado" required>
+            <input type="text" name="localEncontrado" required value="<?php echo htmlspecialchars('localizacaoEcontrada') ?>">
 
             <label>Local de busca</label>
-            <input type="text" name="localBusca" required>
+            <input type="text" name="localBusca" required value="<?php echo htmlspecialchars('localizacaoBuscar')?>">
 
             <label>Classificação</label>
             <select id="tipo" name="select" required>

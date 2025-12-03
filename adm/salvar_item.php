@@ -3,6 +3,8 @@ session_start();
 require_once('../db/conexao_db.php');
 require_once('../db/tab_item.php');
 
+$erro = [];
+
 if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
     header('Location: ../login.php');
     exit();
@@ -21,6 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $tipo = $_POST['select'];
         $administrador_fk = $_SESSION['admin_id'];
 
+        if(empty($nome) || empty($dataEncontrado) || empty($localizacaoEncontrada) || empty($localizacaoBuscar) || empty($tipo)) {
+           $erro = []; "todos os campos precisam ser preenchidos";
+        } //esse daqui é só para testes mesmo
+        
         $imagem = null;
         if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
             $diretorio_img = "../img/";
