@@ -36,7 +36,7 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
             <input type="text" name="localBusca" required value="<?php echo htmlspecialchars('localizacaoBuscar')?>">
 
             <label>Classificação</label>
-            <select name="select" required>
+            <select id="tipo" name="select" required>
                 <option value="Eletrônico">Eletrônico</option>
                 <option value="Vestuário">Vestuário</option>
                 <option value="Material Escolar">Material Escolar</option>
