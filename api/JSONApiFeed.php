@@ -13,18 +13,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 // Incluir diretamente a classe Database
 include_once "../db/conexao_db.php";
+include_once "../db/config.php";
 
 // Função para padronizar respostas JSON
-function jsonResponse($success, $message = "", $data = null, $statusCode = 200) {
+function jsonResponse($success, $message = "", $data = null, $statusCode = 200)
+{
     http_response_code($statusCode);
-    
+
     $response = [
         "sucesso" => $success,
         "mensagem" => $message,
         "dados" => $data,
         "timestamp" => date('Y-m-d H:i:s')
     ];
-    
+
     echo json_encode($response, JSON_UNESCAPED_UNICODE);
     exit();
 }
@@ -33,54 +35,65 @@ try {
     // Criar conexão PDO usando sua classe
     $database = new Database();
     $conn = $database->getConnection();
-    
+
     // Verificar se a conexão foi estabelecida
     if (!$conn) {
         jsonResponse(false, "Erro na conexão com o banco de dados", null, 500);
     }
-    
+
     // Obter parâmetros da requisição
-    $status = isset($_GET['status']) ? trim($_GET['status']) : 'perdido';
+    $status = isset($_GET['status']) ? trim($_GET['status']) : 'disponivel';
     $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
     $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 20;
-    
+
     // Validações
     if ($pagina < 1) $pagina = 1;
     if ($limite < 1 || $limite > 100) $limite = 20;
     $offset = ($pagina - 1) * $limite;
-    
-    // URL base para imagens (ajuste conforme seu servidor)
-    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") 
-                . "://$_SERVER[HTTP_HOST]";
+
+    // URL base para imagens
+    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
+        . "://$_SERVER[HTTP_HOST]";
     $uploads_url = $base_url . "/uploads/";
-    
-    // Query principal - AJUSTE OS NOMES DAS COLUNAS CONFORME SUA TABELA
+
+    // Query principal - AJUSTADA para sua estrutura real
     $query = "
         SELECT 
-            i.*,
+            ip.id_pk,
+            ip.nome as titulo,
+            '' as descricao, -- Coluna não existe no seu banco
+            ip.status,
+            ip.imagem,
+            ip.localizacaoEncontrada as local_encontrado,
+            ip.localizacaoBuscar as local_buscar,
+            ip.dataEncontrado,
+            ip.tipo,
+            ip.dataCadastro,
+            ip.administrador_fk,
             a.nome as administrador_nome,
-            a.email as administrador_email
-        FROM itens i 
-        LEFT JOIN administrador a ON i.administrador_fk = a.id_pk 
-        WHERE i.status = :status
-        ORDER BY i.dataCadastro DESC
+            a.email as administrador_email,
+            a.cpf as administrador_cpf
+        FROM itemPerdido ip 
+        LEFT JOIN administrador a ON ip.administrador_fk = a.id_pk 
+        WHERE ip.status = :status
+        ORDER BY ip.dataCadastro DESC
         LIMIT :limite OFFSET :offset
     ";
-    
+
     // Preparar a query
     $stmt = $conn->prepare($query);
-    
+
     // Bind dos parâmetros
     $stmt->bindParam(':status', $status, PDO::PARAM_STR);
     $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-    
+
     // Executar
     $stmt->execute();
-    
+
     // Obter resultados
     $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+
     // Formatar os dados
     $itensFormatados = [];
     foreach ($itens as $item) {
@@ -88,7 +101,7 @@ try {
         if (!empty($item['imagem'])) {
             $item['imagem_url'] = $uploads_url . $item['imagem'];
         }
-        
+
         // Formatar datas para ISO
         if (isset($item['dataCadastro'])) {
             $item['dataCadastro'] = date('c', strtotime($item['dataCadastro']));
@@ -96,18 +109,18 @@ try {
         if (isset($item['dataEncontrado'])) {
             $item['dataEncontrado'] = date('c', strtotime($item['dataEncontrado']));
         }
-        
+
         $itensFormatados[] = $item;
     }
-    
+
     // Query para contar total de itens
-    $countQuery = "SELECT COUNT(*) as total FROM itens WHERE status = :status";
+    $countQuery = "SELECT COUNT(*) as total FROM itemPerdido WHERE status = :status";
     $countStmt = $conn->prepare($countQuery);
     $countStmt->bindParam(':status', $status, PDO::PARAM_STR);
     $countStmt->execute();
     $totalResult = $countStmt->fetch(PDO::FETCH_ASSOC);
     $totalItens = (int)$totalResult['total'];
-    
+
     // Montar resposta
     $responseData = [
         "itens" => $itensFormatados,
@@ -118,16 +131,13 @@ try {
             "total_paginas" => ceil($totalItens / $limite)
         ]
     ];
-    
+
     jsonResponse(true, "Feed carregado com sucesso", $responseData);
-    
 } catch (PDOException $e) {
-    // Log do erro (em produção, não mostrar detalhes ao usuário)
+    // Log do erro
     error_log("Erro PDO: " . $e->getMessage());
-    jsonResponse(false, "Erro no banco de dados", null, 500);
-    
+    jsonResponse(false, "Erro no banco de dados: " . $e->getMessage(), null, 500);
 } catch (Exception $e) {
     error_log("Erro geral: " . $e->getMessage());
     jsonResponse(false, "Erro interno do servidor", null, 500);
 }
-?>
