@@ -1,143 +1,64 @@
 <?php
-// api/feed_itens.php
+// api/item.php
 header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
-// Permitir requisições OPTIONS (CORS preflight)
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
-// Incluir diretamente a classe Database
 include_once "../db/conexao_db.php";
 include_once "../db/config.php";
 
-// Função para padronizar respostas JSON
-function jsonResponse($success, $message = "", $data = null, $statusCode = 200)
-{
-    http_response_code($statusCode);
-
-    $response = [
-        "sucesso" => $success,
-        "mensagem" => $message,
-        "dados" => $data,
-        "timestamp" => date('Y-m-d H:i:s')
-    ];
-
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-    exit();
-}
-
 try {
-    // Criar conexão PDO usando sua classe
     $database = new Database();
     $conn = $database->getConnection();
-
-    // Verificar se a conexão foi estabelecida
-    if (!$conn) {
-        jsonResponse(false, "Erro na conexão com o banco de dados", null, 500);
-    }
-
-    // Obter parâmetros da requisição
-    $status = isset($_GET['status']) ? trim($_GET['status']) : 'disponivel';
-    $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
-    $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 20;
-
-    // Validações
-    if ($pagina < 1) $pagina = 1;
-    if ($limite < 1 || $limite > 100) $limite = 20;
-    $offset = ($pagina - 1) * $limite;
-
+    
     // URL base para imagens
-    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")
-        . "://$_SERVER[HTTP_HOST]";
-    $uploads_url = $base_url . "/uploads/";
-
-    // Query principal - AJUSTADA para sua estrutura real
-    $query = "
-        SELECT 
-            ip.id_pk,
-            ip.nome as titulo,
-            '' as descricao, -- Coluna não existe no seu banco
-            ip.status,
-            ip.imagem,
-            ip.localizacaoEncontrada as local_encontrado,
-            ip.localizacaoBuscar as local_buscar,
-            ip.dataEncontrado,
-            ip.tipo,
-            ip.dataCadastro,
-            ip.administrador_fk,
-            a.nome as administrador_nome,
-            a.email as administrador_email,
-            a.cpf as administrador_cpf
-        FROM itemPerdido ip 
-        LEFT JOIN administrador a ON ip.administrador_fk = a.id_pk 
-        WHERE ip.status = :status
-        ORDER BY ip.dataCadastro DESC
-        LIMIT :limite OFFSET :offset
-    ";
-
-    // Preparar a query
-    $stmt = $conn->prepare($query);
-
-    // Bind dos parâmetros
-    $stmt->bindParam(':status', $status, PDO::PARAM_STR);
-    $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-
-    // Executar
-    $stmt->execute();
-
-    // Obter resultados
-    $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Formatar os dados
-    $itensFormatados = [];
-    foreach ($itens as $item) {
-        // Adicionar URL completa para imagens
-        if (!empty($item['imagem'])) {
-            $item['imagem_url'] = $uploads_url . $item['imagem'];
-        }
-
-        // Formatar datas para ISO
-        if (isset($item['dataCadastro'])) {
-            $item['dataCadastro'] = date('c', strtotime($item['dataCadastro']));
-        }
-        if (isset($item['dataEncontrado'])) {
-            $item['dataEncontrado'] = date('c', strtotime($item['dataEncontrado']));
-        }
-
-        $itensFormatados[] = $item;
+    $url_base = "https://ac.infinitydev.com.br/img/";
+    
+    // Pega o ID da URL (ex: api/item.php?id=1)
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+    
+    if ($id <= 0) {
+        // Se não informou ID válido, retorna erro
+        echo json_encode(["erro" => "ID não informado ou inválido"]);
+        exit();
     }
-
-    // Query para contar total de itens
-    $countQuery = "SELECT COUNT(*) as total FROM itemPerdido WHERE status = :status";
-    $countStmt = $conn->prepare($countQuery);
-    $countStmt->bindParam(':status', $status, PDO::PARAM_STR);
-    $countStmt->execute();
-    $totalResult = $countStmt->fetch(PDO::FETCH_ASSOC);
-    $totalItens = (int)$totalResult['total'];
-
-    // Montar resposta
-    $responseData = [
-        "itens" => $itensFormatados,
-        "paginacao" => [
-            "pagina_atual" => $pagina,
-            "itens_por_pagina" => $limite,
-            "total_itens" => $totalItens,
-            "total_paginas" => ceil($totalItens / $limite)
-        ]
-    ];
-
-    jsonResponse(true, "Feed carregado com sucesso", $responseData);
-} catch (PDOException $e) {
-    // Log do erro
-    error_log("Erro PDO: " . $e->getMessage());
-    jsonResponse(false, "Erro no banco de dados: " . $e->getMessage(), null, 500);
+    
+    // Busca APENAS o item com o ID especificado
+    $query = "SELECT * FROM itemPerdido WHERE id_pk = :id AND status = 'disponivel'";
+    $stmt = $conn->prepare($query);
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($row) {
+        // Formata o item como um objeto único
+        $item = array(
+            "id" => (int)$row['id_pk'],
+            "nome" => $row['nome'],
+            "data_encontrado" => $row['dataEncontrado'],
+            "local_encontrado" => $row['localizacaoEncontrada'],
+            "local_buscar" => $row['localizacaoBuscar'],
+            "tipo" => $row['tipo'],
+            "administrador_fk" => (int)$row['administrador_fk'],
+            "status" => $row['status'],
+            "data_cadastro" => $row['dataCadastro']
+        );
+        
+        // Adiciona URL da imagem se existir
+        if (!empty($row['imagem'])) {
+            $item['imagem'] = $url_base . $row['imagem'];
+        } else {
+            $item['imagem'] = null;
+        }
+        
+        // Retorna APENAS UM objeto (igual exemplo do CEP)
+        echo json_encode($item, JSON_UNESCAPED_UNICODE);
+        
+    } else {
+        // Se não encontrou o item
+        echo json_encode(["erro" => "Item não encontrado ou indisponível"]);
+    }
+    
 } catch (Exception $e) {
-    error_log("Erro geral: " . $e->getMessage());
-    jsonResponse(false, "Erro interno do servidor", null, 500);
+    echo json_encode(["erro" => "Falha ao carregar item"]);
 }
