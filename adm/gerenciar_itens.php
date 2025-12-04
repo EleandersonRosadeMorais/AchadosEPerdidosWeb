@@ -29,7 +29,7 @@ $itens = $itemPerdido->listar();
     <div class="container">
 
         <div class="divGerenciamento">
-        <h2>Área de Gerenciamento</h2>
+        <h2>Bem-Vindo(a) a Área de Gerenciamento, <?php echo $_SESSION['admin_nome']; ?></h2>
         <?php if (isset($_GET['sucesso'])): ?>
             <div class="sucesso"><?php echo $_GET['sucesso']; ?></div>
         <?php endif; ?>

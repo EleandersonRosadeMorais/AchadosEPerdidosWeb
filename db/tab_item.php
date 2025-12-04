@@ -164,6 +164,33 @@ class ItemPerdido
         }
     }
 
+
+    public function buscarPorNome($nome)
+    {
+        $query = "SELECT i.*, a.nome as administrador_nome 
+                  FROM " . $this->table_name . " i
+                  LEFT JOIN administrador a ON i.administrador_fk = a.id_pk
+                  WHERE i.nome LIKE ?
+                  ORDER BY i.dataCadastro DESC";
+    
+        try {
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute(['%' . $nome . '%']);
+    
+            $itens = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $itens[] = $row;
+            }
+    
+            return $itens;
+    
+        } catch (PDOException $e) {
+            error_log("Erro na busca por nome: " . $e->getMessage());
+            return [];
+        }
+    }
+
+
     
 }
 
