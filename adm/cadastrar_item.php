@@ -30,13 +30,13 @@ if (!isset($_SESSION['admin_logado']) || $_SESSION['admin_logado'] !== true) {
             <input type="date" name="data" required value="<?php echo htmlspecialchars('dataEncontrado')?>">
 
             <label>Local onde foi encontrado</label>
-            <input type="text" name="localEncontrado" required value="<?php echo htmlspecialchars('localizacaoEcontrada') ?>">
+            <input type="text" name="localEncontrado" required value="<?php echo htmlspecialchars('localizacaoEncontrada')?>">
 
             <label>Local de busca</label>
             <input type="text" name="localBusca" required value="<?php echo htmlspecialchars('localizacaoBuscar')?>">
 
             <label>Classificação</label>
-            <select id="tipo" name="select" required>
+            <select class="tipo" name="select" required>
                 <option value="Eletrônico">Eletrônico</option>
                 <option value="Vestuário">Vestuário</option>
                 <option value="Material Escolar">Material Escolar</option>

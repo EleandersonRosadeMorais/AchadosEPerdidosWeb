@@ -47,12 +47,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
 
             <label for="nome">Nome:</label>
-            <input type="text" name="nome" required>
+            <input type="text" name="nome" required value="<?= htmlspecialchars($nome ?? ''); ?>">
             
             <br><br>
 
             <label for="email">Email:</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" required value="<?= htmlspecialchars($email ?? ''); ?>">
 
             <br><br>
 
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <br><br>
 
             <label for="cpf">CPF:</label>
-            <input type="text" name="cpf" placeholder="000.000.000-00" required>
+            <input type="text" name="cpf" placeholder="000.000.000-00" required value="<?= htmlspecialchars($cpf ?? ''); ?>">
 
             <br><br>
 

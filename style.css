@@ -114,7 +114,7 @@
             margin-bottom: 20px;
         }
 
-        #tipo {
+        .tipo {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -204,16 +204,17 @@
 
         
         .btn-voltar2 {
-            display: flex;
+            display: block;
             background: #02416D;
             padding: 10px 20px;
             color: #fff;
             text-decoration: none;
             border-radius: 6px;
             transition: 0.2s;
-            width: 15%;
+            width: 20%;
+            margin: auto;
             margin-top: 20px;
-            justify-content: center;
+            text-align: center;
         }
 
         #titulo {
@@ -725,4 +726,29 @@
         .filtro2{
             width: 120px;
             margin-left: 10px;
+        }
+
+        .boxEditar {
+            display: flex;
+            width: 40%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 30px;
+            margin: 25px auto;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            flex-direction: column;
+        }
+
+        .status {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: center;
+            box-sizing: border-box;
+            margin-bottom: 20px;
         }

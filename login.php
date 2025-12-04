@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
             <h1>Fazer login</h1>
 
             <label for="email">Email:</label>
-            <input type="email" name="email" required>
+            <input type="email" name="email" required value="<?= htmlspecialchars($email ?? ''); ?>">
 
             <br><br>
 
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         </form>
 
         <div class="mensagem">
-            <?php if (!empty($mensagem_erro)) echo '<p>' . $mensagem_erro . '</p>'; ?>
+        <?php if (!empty($mensagem_erro)) echo '<p>' . htmlspecialchars($mensagem_erro) . '</p>'; ?>
         </div>
     </div>
 </body>
