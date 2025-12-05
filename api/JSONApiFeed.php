@@ -13,7 +13,7 @@ try {
     $database = new Database();
     $conn = $database->getConnection();
     
-    $url_base = "https://ac.infinitydev.com.br/img/";
+    $url_base = "https://ap.infinitydev.com.br/img/";
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
     if ($id <= 0) {
