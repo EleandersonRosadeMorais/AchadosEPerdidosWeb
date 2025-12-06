@@ -20,6 +20,7 @@ if (!empty($termo)) {
 $isAdmin = isset($_SESSION['admin_logado']) && $_SESSION['admin_logado'] === true;
 ?>
 
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
