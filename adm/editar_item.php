@@ -4,7 +4,7 @@ require_once('../db/conexao_db.php');
 require_once('../db/tab_item.php');
 
 if (!isset($_GET['id'])) {
-    header('Location: gerenciar_itens.php');
+    header('Location: gerenciar_itens.php'); // Já está na pasta admin, não precisa de "admin/"
     exit();
 }
 
@@ -15,64 +15,75 @@ $itemPerdido = new ItemPerdido($db);
 $item = $itemPerdido->buscarPorId($_GET['id']);
 
 if (!$item) {
-    header('Location: index.php');
+    header('Location: ../index.php'); // Precisa voltar para raiz
     exit();
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar item</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css"> <!-- Correto, style.css está na raiz -->
+    <link rel="stylesheet" href="../css/editar.css">
+    
 </head>
 
 <body>
 
-<div class="boxEditar">
-       <form action="salvar_edicao.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
-        <label for="novo_nome">Novo nome do item:</label>
-        <input type="text" id="novo_nome" name="novo_nome" required
-            value="<?php echo htmlspecialchars($item["nome"]) ?>">
+    <div class="boxEditar">
+        <h1>Editar item perdido</h1>
+        <form action="salvar_edicao.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+            <!-- Form action está correto, salvar_edicao.php está na mesma pasta admin -->
+            
+            <label for="novo_nome">Novo nome do item:</label>
+            <input type="text" id="novo_nome" name="novo_nome" required
+                value="<?php echo htmlspecialchars($item["nome"]) ?>">
 
-        <label for="nova_data">Nova data:</label>
-        <input type="date" id="nova_data" name="nova_data" required
-            value="<?php echo htmlspecialchars($item['dataEncontrado']) ?>">
+            <label for="nova_data">Nova data:</label>
+            <input type="date" id="nova_data" name="nova_data" required
+                value="<?php echo htmlspecialchars($item['dataEncontrado']) ?>">
 
-        <label for="novo_local_encontrado">Novo local que foi encontrado:</label>
-        <input type="text" id="novo_local_encontrado" name="novo_local_encontrado" required
-            value="<?php echo htmlspecialchars($item['localizacaoEncontrada']) ?>">
+            <label for="novo_local_encontrado">Novo local que foi encontrado:</label>
+            <input type="text" id="novo_local_encontrado" name="novo_local_encontrado" required
+                value="<?php echo htmlspecialchars($item['localizacaoEncontrada']) ?>">
 
-        <label for="novo_local_busca">Novo local de busca:</label>
-        <input type="text"id="novo_local_busca" name="novo_local_busca" required
-            value="<?php echo htmlspecialchars($item['localizacaoBuscar']) ?>">
+            <label for="novo_local_busca">Novo local de busca:</label>
+            <input type="text" id="novo_local_busca" name="novo_local_busca" required
+                value="<?php echo htmlspecialchars($item['localizacaoBuscar']) ?>">
 
-        <label>Classificação</label>
-        <select name="tipo_editar" required>
-            <option value="Eletrônico" <?php echo ($item['tipo'] == 'Eletrônico') ? 'selected' : ''; ?>>Eletrônico</option>
-            <option value="Vestuário" <?php echo ($item['tipo'] == 'Vestuário') ? 'selected' : ''; ?>>Vestuário</option>
-            <option value="Material Escolar" <?php echo ($item['tipo'] == 'Material Escolar') ? 'selected' : ''; ?>>Material Escolar</option>
-            <option value="Documentação" <?php echo ($item['tipo'] == 'Documentação') ? 'selected' : ''; ?>>Documentação</option>
-            <option value="Ferramenta" <?php echo ($item['tipo'] == 'Ferramenta') ? 'selected' : ''; ?>>Ferramenta</option>
-        </select>
+            <label>Classificação</label>
+            <select class="tipo" name="tipo_editar" required>
+                <option value="Eletrônico" <?php echo ($item['tipo'] == 'Eletrônico') ? 'selected' : ''; ?>>Eletrônico
+                </option>
+                <option value="Vestuário" <?php echo ($item['tipo'] == 'Vestuário') ? 'selected' : ''; ?>>Vestuário
+                </option>
+                <option value="Material Escolar" <?php echo ($item['tipo'] == 'Material Escolar') ? 'selected' : ''; ?>>
+                    Material Escolar</option>
+                <option value="Documentação" <?php echo ($item['tipo'] == 'Documentação') ? 'selected' : ''; ?>>
+                    Documentação</option>
+                <option value="Ferramenta" <?php echo ($item['tipo'] == 'Ferramenta') ? 'selected' : ''; ?>>Ferramenta
+                </option>
+            </select>
 
-        <label>Imagem</label>
-        <input type="file" name="imagem_editar" accept="image/*">
+            <label>Imagem</label>
+            <input type="file" name="imagem_editar" accept="image/*">
 
-        <label>Status:</label>
-        <select name="status_editar" required>
-            <option value="disponivel">disponivel</option>
-            <option value="devolvido">devolvido</option>
-            <option value="arquivado"></option>
-        </select>
+            <label>Status:</label>
+            <select class="status" name="status_editar" required>
+                <option value="disponivel" <?= ($item['status'] == 'disponivel') ? 'selected' : ''; ?>>Disponível</option>
+                <option value="devolvido" <?= ($item['status'] == 'devolvido') ? 'selected' : ''; ?>>Devolvido</option>
+                <option value="arquivado" <?= ($item['status'] == 'arquivado') ? 'selected' : ''; ?>>Arquivado</option>
+            </select>
 
-        <button type="submit">Salvar alterações</button>
-    </form>
+            <button type="submit">Salvar alterações</button>
+
+            <a href="gerenciar_itens.php" class="btn-voltar2">Retornar</a> <!-- Correto, mesma pasta -->
+        </form>
     </div>
-
 
 </body>
 

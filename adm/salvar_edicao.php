@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $novo_nome = $_POST['novo_nome'];
         $nova_data = $_POST['nova_data'];
-        $novo_local_encontrado = $_POST['nova_local_encontrado'];
+        $novo_local_encontrado = $_POST['novo_local_encontrado'];
         $novo_local_busca = $_POST['novo_local_busca'];
         $tipo_editar = $_POST['tipo_editar'];
         $status_editar = $_POST['status_editar'];

@@ -12,7 +12,7 @@ include_once "../db/config.php";
 try {
     $database = new Database();
     $conn = $database->getConnection();
-    
+
     $url_base = "https://ap.infinitydev.com.br/img/";
     $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
@@ -35,7 +35,7 @@ try {
                 imagem
               FROM itemPerdido 
               WHERE id_pk = :id AND status = 'disponivel'";
-    
+
     $stmt = $conn->prepare($query);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
@@ -44,14 +44,15 @@ try {
 
     if ($row) {
         // FUNÇÃO PARA CONVERTER QUALQUER DADO PROBLEMÁTICO
-        function garantirUTF8($dado) {
+        function garantirUTF8($dado)
+        {
             if (is_string($dado)) {
                 // Se parece com dados binários (\x ou \z)
                 if (strpos($dado, '\\x') !== false || strpos($dado, '\\z') !== false) {
                     // Tentar decodificar como string literal
                     $dado = stripcslashes($dado);
                 }
-                
+
                 // Verificar se já é UTF-8 válido
                 if (!mb_check_encoding($dado, 'UTF-8')) {
                     $dado = mb_convert_encoding($dado, 'UTF-8', 'UTF-8,ISO-8859-1,ASCII,Windows-1252');
@@ -79,10 +80,10 @@ try {
         }
 
         echo json_encode($item, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        
+
         // DEBUG: Para ver o que está sendo enviado
         // file_put_contents('debug_json.log', print_r($item, true), FILE_APPEND);
-        
+
     } else {
         echo json_encode(["erro" => "Item não encontrado ou indisponível"]);
     }
