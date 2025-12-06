@@ -4,7 +4,7 @@ require_once('../db/conexao_db.php');
 require_once('../db/tab_item.php');
 
 if (!isset($_GET['id'])) {
-    header('Location: gerenciar_itens.php');
+    header('Location: gerenciar_itens.php'); // Já está na pasta admin, não precisa de "admin/"
     exit();
 }
 
@@ -15,7 +15,7 @@ $itemPerdido = new ItemPerdido($db);
 $item = $itemPerdido->buscarPorId($_GET['id']);
 
 if (!$item) {
-    header('Location: index.php');
+    header('Location: ../index.php'); // Precisa voltar para raiz
     exit();
 }
 ?>
@@ -27,7 +27,9 @@ if (!$item) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar item</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css"> <!-- Correto, style.css está na raiz -->
+    <link rel="stylesheet" href="../css/editar.css">
+    
 </head>
 
 <body>
@@ -35,6 +37,8 @@ if (!$item) {
     <div class="boxEditar">
         <h1>Editar item perdido</h1>
         <form action="salvar_edicao.php?id=<?php echo $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+            <!-- Form action está correto, salvar_edicao.php está na mesma pasta admin -->
+            
             <label for="novo_nome">Novo nome do item:</label>
             <input type="text" id="novo_nome" name="novo_nome" required
                 value="<?php echo htmlspecialchars($item["nome"]) ?>">
@@ -75,13 +79,11 @@ if (!$item) {
                 <option value="arquivado" <?= ($item['status'] == 'arquivado') ? 'selected' : ''; ?>>Arquivado</option>
             </select>
 
-
             <button type="submit">Salvar alterações</button>
 
-            <a href="gerenciar_itens.php" class="btn-voltar2">Retornar</a>
+            <a href="gerenciar_itens.php" class="btn-voltar2">Retornar</a> <!-- Correto, mesma pasta -->
         </form>
     </div>
-
 
 </body>
 

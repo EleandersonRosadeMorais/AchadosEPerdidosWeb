@@ -1,0 +1,131 @@
+/* ESTILO PARA PÁGINA EDITAR_ITEM.PHP */
+
+.boxEditar {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.boxEditar h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+    font-size: 28px;
+}
+
+.boxEditar form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.boxEditar label {
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 16px;
+}
+
+.boxEditar input[type="text"],
+.boxEditar input[type="date"],
+.boxEditar input[type="file"],
+.boxEditar select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.boxEditar input[type="text"]:focus,
+.boxEditar input[type="date"]:focus,
+.boxEditar select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.boxEditar .tipo,
+.boxEditar .status {
+    padding: 12px;
+    background-color: white;
+}
+
+.boxEditar button[type="submit"] {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.boxEditar button[type="submit"]:hover {
+    background: linear-gradient(135deg, #2980b9, #1c5980);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+}
+
+.boxEditar .btn-voltar2 {
+    display: inline-block;
+    text-align: center;
+    background: #95a5a6;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.boxEditar .btn-voltar2:hover {
+    background: #7f8c8d;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 10px rgba(127, 140, 141, 0.2);
+}
+
+/* Estilo para preview de imagem se quiser adicionar */
+.imagem-preview {
+    max-width: 200px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .boxEditar {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .boxEditar h1 {
+        font-size: 24px;
+    }
+    
+    .boxEditar input[type="text"],
+    .boxEditar input[type="date"],
+    .boxEditar select {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+}

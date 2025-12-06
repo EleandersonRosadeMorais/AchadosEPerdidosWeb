@@ -1,133 +1,94 @@
 <?php
-// api/feed_itens.php
+// NO TOPO do arquivo, antes de qualquer coisa
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
-// Permitir requisições OPTIONS (CORS preflight)
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
-// Incluir diretamente a classe Database
 include_once "../db/conexao_db.php";
-
-// Função para padronizar respostas JSON
-function jsonResponse($success, $message = "", $data = null, $statusCode = 200) {
-    http_response_code($statusCode);
-    
-    $response = [
-        "sucesso" => $success,
-        "mensagem" => $message,
-        "dados" => $data,
-        "timestamp" => date('Y-m-d H:i:s')
-    ];
-    
-    echo json_encode($response, JSON_UNESCAPED_UNICODE);
-    exit();
-}
+include_once "../db/config.php";
 
 try {
-    // Criar conexão PDO usando sua classe
     $database = new Database();
     $conn = $database->getConnection();
-    
-    // Verificar se a conexão foi estabelecida
-    if (!$conn) {
-        jsonResponse(false, "Erro na conexão com o banco de dados", null, 500);
+
+    $url_base = "https://ap.infinitydev.com.br/img/";
+    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+    if ($id <= 0) {
+        echo json_encode(["erro" => "ID não informado ou inválido"]);
+        exit();
     }
-    
-    // Obter parâmetros da requisição
-    $status = isset($_GET['status']) ? trim($_GET['status']) : 'perdido';
-    $pagina = isset($_GET['pagina']) ? intval($_GET['pagina']) : 1;
-    $limite = isset($_GET['limite']) ? intval($_GET['limite']) : 20;
-    
-    // Validações
-    if ($pagina < 1) $pagina = 1;
-    if ($limite < 1 || $limite > 100) $limite = 20;
-    $offset = ($pagina - 1) * $limite;
-    
-    // URL base para imagens (ajuste conforme seu servidor)
-    $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") 
-                . "://$_SERVER[HTTP_HOST]";
-    $uploads_url = $base_url . "/uploads/";
-    
-    // Query principal - AJUSTE OS NOMES DAS COLUNAS CONFORME SUA TABELA
-    $query = "
-        SELECT 
-            i.*,
-            a.nome as administrador_nome,
-            a.email as administrador_email
-        FROM itens i 
-        LEFT JOIN administrador a ON i.administrador_fk = a.id_pk 
-        WHERE i.status = :status
-        ORDER BY i.dataCadastro DESC
-        LIMIT :limite OFFSET :offset
-    ";
-    
-    // Preparar a query
+
+    // Query - FORÇAR charset na query também
+    $query = "SELECT 
+                id_pk,
+                CONVERT(nome USING utf8mb4) as nome,
+                dataEncontrado,
+                CONVERT(localizacaoEncontrada USING utf8mb4) as localizacaoEncontrada,
+                CONVERT(localizacaoBuscar USING utf8mb4) as localizacaoBuscar,
+                CONVERT(tipo USING utf8mb4) as tipo,
+                administrador_fk,
+                status,
+                dataCadastro,
+                imagem
+              FROM itemPerdido 
+              WHERE id_pk = :id AND status = 'disponivel'";
+
     $stmt = $conn->prepare($query);
-    
-    // Bind dos parâmetros
-    $stmt->bindParam(':status', $status, PDO::PARAM_STR);
-    $stmt->bindParam(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-    
-    // Executar
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
-    
-    // Obter resultados
-    $itens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Formatar os dados
-    $itensFormatados = [];
-    foreach ($itens as $item) {
-        // Adicionar URL completa para imagens
-        if (!empty($item['imagem'])) {
-            $item['imagem_url'] = $uploads_url . $item['imagem'];
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        // FUNÇÃO PARA CONVERTER QUALQUER DADO PROBLEMÁTICO
+        function garantirUTF8($dado)
+        {
+            if (is_string($dado)) {
+                // Se parece com dados binários (\x ou \z)
+                if (strpos($dado, '\\x') !== false || strpos($dado, '\\z') !== false) {
+                    // Tentar decodificar como string literal
+                    $dado = stripcslashes($dado);
+                }
+
+                // Verificar se já é UTF-8 válido
+                if (!mb_check_encoding($dado, 'UTF-8')) {
+                    $dado = mb_convert_encoding($dado, 'UTF-8', 'UTF-8,ISO-8859-1,ASCII,Windows-1252');
+                }
+            }
+            return $dado;
         }
-        
-        // Formatar datas para ISO
-        if (isset($item['dataCadastro'])) {
-            $item['dataCadastro'] = date('c', strtotime($item['dataCadastro']));
+
+        $item = array(
+            "id" => (int)$row['id_pk'],
+            "nome" => garantirUTF8($row['nome']),
+            "data_encontrado" => $row['dataEncontrado'],
+            "local_encontrado" => garantirUTF8($row['localizacaoEncontrada']),
+            "local_buscar" => garantirUTF8($row['localizacaoBuscar']),
+            "tipo" => garantirUTF8($row['tipo']),
+            "administrador_fk" => (int)$row['administrador_fk'],
+            "status" => $row['status'],
+            "data_cadastro" => $row['dataCadastro']
+        );
+
+        if (!empty($row['imagem'])) {
+            $item['imagem'] = $url_base . $row['imagem'];
+        } else {
+            $item['imagem'] = null;
         }
-        if (isset($item['dataEncontrado'])) {
-            $item['dataEncontrado'] = date('c', strtotime($item['dataEncontrado']));
-        }
-        
-        $itensFormatados[] = $item;
+
+        echo json_encode($item, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        // DEBUG: Para ver o que está sendo enviado
+        // file_put_contents('debug_json.log', print_r($item, true), FILE_APPEND);
+
+    } else {
+        echo json_encode(["erro" => "Item não encontrado ou indisponível"]);
     }
-    
-    // Query para contar total de itens
-    $countQuery = "SELECT COUNT(*) as total FROM itens WHERE status = :status";
-    $countStmt = $conn->prepare($countQuery);
-    $countStmt->bindParam(':status', $status, PDO::PARAM_STR);
-    $countStmt->execute();
-    $totalResult = $countStmt->fetch(PDO::FETCH_ASSOC);
-    $totalItens = (int)$totalResult['total'];
-    
-    // Montar resposta
-    $responseData = [
-        "itens" => $itensFormatados,
-        "paginacao" => [
-            "pagina_atual" => $pagina,
-            "itens_por_pagina" => $limite,
-            "total_itens" => $totalItens,
-            "total_paginas" => ceil($totalItens / $limite)
-        ]
-    ];
-    
-    jsonResponse(true, "Feed carregado com sucesso", $responseData);
-    
-} catch (PDOException $e) {
-    // Log do erro (em produção, não mostrar detalhes ao usuário)
-    error_log("Erro PDO: " . $e->getMessage());
-    jsonResponse(false, "Erro no banco de dados", null, 500);
-    
 } catch (Exception $e) {
-    error_log("Erro geral: " . $e->getMessage());
-    jsonResponse(false, "Erro interno do servidor", null, 500);
+    // Log de erro para debug
+    error_log("API Error: " . $e->getMessage());
+    echo json_encode(["erro" => "Falha ao carregar item"]);
 }
-?>

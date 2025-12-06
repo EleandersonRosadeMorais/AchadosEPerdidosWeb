@@ -1,22 +1,17 @@
 <?php
 session_start();
-require_once('db/conexao_db.php');
-require_once('db/tab_item.php');
+require_once('./db/conexao_db.php');
+require_once('./db/tab_item.php');
 
 $database = new Database();
 $db = $database->getConnection();
 $itemPerdido = new ItemPerdido($db);
 
-$tipo = $_GET['tipo'] ?? '';
+$itens = $itemPerdido->buscarPorStatus('disponivel');
 
-if (!empty($tipo)) {
-    
-    $itens = $itemPerdido->buscarPorTipo($tipo);
-} else {
-    
-    $itens = $itemPerdido->buscarPorStatus('disponivel');
-}
-
+// Verificar se é admin
+$isAdmin = isset($_SESSION['admin_logado']) && $_SESSION['admin_logado'] === true;
+$adminNome = isset($_SESSION['admin_nome']) ? $_SESSION['admin_nome'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -25,68 +20,100 @@ if (!empty($tipo)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal de Achados e Perdidos</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
-    <?php include('templates/cabecalho.php'); ?>
+<?php include('templates/cabecalho.php'); ?>
 
-    <h1 class="sobre">Sobre o site</h1>
-
-    <div class="saudacao">
-        <h1>Bem-vindo ao Portal de Achados e Perdidos</h1>
-        <p>
-            Nosso objetivo é ajudar pessoas a encontrarem itens perdidos da forma mais rápida e simples possível.
-            Aqui você pode registrar objetos que encontrou ou procurar por algo que tenha perdido.
-            Navegue pelo site, veja os itens cadastrados e contribua para que outros também recuperem seus pertences!
-        </p>
-    </div>
-
-    <h1 class="rotItens">Itens Encontrados (<?php echo count($itens); ?>)</h1>
-    <h2 class="filtro">
-    Filtrar por 
-    <form method="GET">
-        <select class="filtro2" name="tipo" onchange="this.form.submit()">
-            <option value="">Todos</option>
-            <option value="Eletrônico" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Eletrônico') ? 'selected' : '' ?>>Eletrônico</option>
-            <option value="Vestuário" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Vestuário') ? 'selected' : '' ?>>Vestuário</option>
-            <option value="Ferramenta" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Ferramenta') ? 'selected' : '' ?>>Ferramenta</option>
-            <option value="Documentação" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Documentação') ? 'selected' : '' ?>>Documentação</option>
-            <option value="Material Escolar" <?= (isset($_GET['tipo']) && $_GET['tipo'] === 'Material Escolar') ? 'selected' : '' ?>>Material Escolar</option>
-        </select>
-    </form>
-</h2>
-
-
-    <?php if (count($itens) > 0): ?>
-        <?php foreach ($itens as $item): ?>
-        <div class="card-item2">
-            <div class="item-img2">
-                <img src="./img/<?php echo $item['imagem'] ?: 'sem-imagem.jpg'; ?>" alt="<?php echo $item['nome']; ?>" 
-                     onerror="this.src='./img/sem-imagem.jpg'">
+<div class="container">
+    <?php if($isAdmin): ?>
+        <div class="admin-welcome">
+            <i class="fas fa-user-shield"></i>
+            <div>
+                <strong>Bem-vindo, <?php echo htmlspecialchars($adminNome); ?>!</strong>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #666;">
+                    Você está logado como administrador
+                </p>
             </div>
-            
-            <div class="item-info2">
-                <h3 class="itemNome"><?php echo htmlspecialchars($item['nome']); ?></h3>
-
-                <div class="info2">
-                    <label><strong>Tipo de Item: </strong><?php echo $item['tipo']; ?></label>
-                    <label><strong>Local Encontrado: </strong><?php echo $item['localizacaoEncontrada']; ?></label>
-                    <label><strong>Buscar em: </strong><?php echo $item['localizacaoBuscar']; ?></label>
-                </div>
-
-                <div class="info-footer2">
-                    <a href="menuItem.php?id=<?php echo $item['id_pk']; ?>" class="btn-visualizar">Visualizar Detalhes</a>
-                    <span class="data-encontrado">Encontrado em: <?php echo date('d/m/Y', strtotime($item['dataEncontrado'])); ?></span>
-                </div>
-            </div>
-        </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <div style="text-align: center; margin: 20px;">
-            <p>Nenhum item disponível no momento.</p>
         </div>
     <?php endif; ?>
+    
+    <h1 class="page-title">
+        <i class="fas fa-box-open"></i> Itens Encontrados
+        <span class="badge"><?php echo count($itens); ?></span>
+    </h1>
+    
+    <?php if (count($itens) > 0): ?>
+        <div class="itens-grid">
+            <?php foreach ($itens as $item): ?>
+                <div class="item-card">
+                    <div class="item-card-image">
+                        <?php if (!empty($item['imagem']) && $item['imagem'] != 'sem-imagem.jpg'): ?>
+                            <img src="./img/<?php echo $item['imagem']; ?>" 
+                                 alt="<?php echo htmlspecialchars($item['nome']); ?>"
+                                 onerror="this.src='./img/sem-imagem.jpg'">
+                        <?php else: ?>
+                            <div class="no-image">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                        <?php endif; ?>
+                        <div class="item-card-type">
+                            <i class="fas fa-tag"></i> <?php echo $item['tipo']; ?>
+                        </div>
+                    </div>
+                    
+                    <div class="item-card-content">
+                        <h3 class="item-card-title"><?php echo htmlspecialchars($item['nome']); ?></h3>
+                        
+                        <div class="item-card-details">
+                            <div class="detail-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <strong>Encontrado em:</strong>
+                                    <span><?php echo $item['localizacaoEncontrada']; ?></span>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-item">
+                                <i class="fas fa-building"></i>
+                                <div>
+                                    <strong>Buscar em:</strong>
+                                    <span><?php echo $item['localizacaoBuscar']; ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="item-card-footer">
+                            <a href="meusitens.php?id=<?php echo $item['id_pk']; ?>" class="btn btn-primary">
+                                <i class="fas fa-info-circle"></i> Ver Detalhes
+                            </a>
+                            
+                            <div class="item-card-date">
+                                <i class="far fa-calendar-check"></i>
+                                <?php echo date('d/m/Y', strtotime($item['dataEncontrado'])); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="empty-message">
+            <div class="empty-icon">📦</div>
+            <h3>Nenhum item disponível no momento</h3>
+            <p>Volte mais tarde para verificar novos itens encontrados.</p>
+            <?php if($isAdmin): ?>
+                <a href="cadastro_item.php" class="btn btn-primary" style="margin-top: 15px;">
+                    <i class="fas fa-plus-circle"></i> Cadastrar Primeiro Item
+                </a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>
 
-    <?php include('templates/rodape.php'); ?>
+<?php include('templates/rodape.php'); ?>
 </body>
 </html>
